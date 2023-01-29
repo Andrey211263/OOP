@@ -4,8 +4,8 @@ public class Sniper extends Archer{
 //        super(name, attack, defence, damage, health, speed);
 //        this.shoots = shoots;
 //    }
-    public Sniper (String name){
-        super(name, 12,10, new int[]{8,10},15, 9);
+    public Sniper (NameCharacter name){
+        super(String.valueOf(name), " Лучник ",12,10, new int[]{8,10},15, 9);
         this.shoots = 32;
     }
 //    @Override

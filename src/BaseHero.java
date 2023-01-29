@@ -1,22 +1,35 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.*;
 
-public class BaseHero {
-    String name;
-    Integer attack, defence, health, speed;
+public abstract class BaseHero implements BaseInterface{
+    String name, type;
+    Integer attack, defence, health, speed, maxhealt;
     int[] damage;
 
-    public BaseHero(String name, int attack, int defence, int[] damage, int health, int speed) {
+    public BaseHero(String name, String type, int attack, int defence, int[] damage, int health, int speed) {
         this.name = name;
+        this.type = type;
         this.attack = attack;
         this.defence = defence;
         this.damage = damage;
-        this.health = health;
+        this.maxhealt = health;
+        this.health = maxhealt - new Random().nextInt(maxhealt);
         this.speed = speed;
     }
     @Override
     public String toString(){
-        return "Name: "+name+" Attack: "+attack+" Defence: "+defence+" Damage: "+ Arrays.toString(damage) +" Health: "+health+" Speed: "+speed;
+        return "Name: "+name+"Type"+type+" Attack: "+attack+" Defence: "+defence+" Damage: "+ Arrays.toString(damage) +" Health: "+health+" Speed: "+speed;
     }
+
+    @Override
+    public void step(ArrayList<BaseHero> heroylist) {
+
+    }
+
+    @Override
+    public String getInfo() {
+        return type + " " + name + " Здоровье: " + String.valueOf(health)+" "+String.valueOf(maxhealt);
+//        return type + " " + name + ". Здоровье: " + health+" , "+maxhealt;
+    }
+
 }
 
