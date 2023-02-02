@@ -1,125 +1,112 @@
 //import java.beans.DefaultPersistenceDelegate;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
-//Написать программу с семью классами, описывающими данных в таблице персонажей.
-// Для каждого создать по два конструктора и геттеры приватных полей. А также метод
-// возвращающий строку с  кратким описанием персонажа. В основной программе создать
-// списки с пятью экземплярами каждого персонажа и вывести информацию обо все в консоль.
-//** Домашнее задание**
-// Разработать иерархию классов персонажей описанных в таблице. Провести анализ(абстракция)
-// полей необходимых данных и перенести обьщие в базовый класс. Так же в базовом классе
-// переопределить метод toString для вывода подробной информации о персонаже. Описать удобный
-// конструктор базового класса и классов наследников так, чтобы необходимые параметры
-// передавались вызовом пустого конструктора класса наследника. В основном классе создать
-// список и заполнить его экземплярами каждого нового класса. Вывести в консоль содержание
-// списка переопределённым иетодом toString(). *Создать список из 50 персонажей выбранных
-// случайным числом и статический метод выбирающий из списка только элементы конкретного,
-// переданного в параметре класса и выводящий их описание в консоль!.
+import units.*;
+
+import static units.Farmer.restoreFarmer;
+
+//                   ************** SEMINAR1 ****************
+//Написать программу с семью классами, описывающими данных в таблице персонажей. Для каждого создать
+// по два конструктора и геттеры приватных полей. А также метод возвращающий строку с  кратким описанием
+// персонажа. В основной программе создать списки с пятью экземплярами каждого персонажа и вывести
+// информацию обо все в консоль.    ** Домашнее задание**
+// Разработать иерархию классов персонажей описанных в таблице. Провести анализ(абстракция) полей необходимых
+// данных и перенести обьщие в базовый класс. Так же в базовом классе переопределить метод toString для вывода
+// подробной информации о персонаже. Описать удобный конструктор базового класса и классов наследников так,
+// чтобы необходимые параметры передавались вызовом пустого конструктора класса наследника. В основном классе
+// создать список и заполнить его экземплярами каждого нового класса. Вывести в консоль содержание списка
+// переопределённым иетодом toString(). *Создать список из 50 персонажей выбранных случайным числом и
+// статический метод выбирающий из списка только элементы конкретного, переданного в параметре класса и
+// выводящий их описание в консоль!.
+//                   ************** SEMINAR2 *****************
+//Добавить файл с описанием интерфейса. В котором описать два метода, void step(); и String getInfo();
+// Реализовать имнтерфейс в абстрактном классе. Создать два списка в классе main. В кждый из списков
+// добавить по десять экземнляров наследников BaseHero. Крестьянин, Разбойник, Снайпер и Колдун могут
+// быть в одном и Крестьянин Разбойник, копейщик, арбалетчик и монах в другой. Реализовать метод step()
+// для магов таким образом, чтобы они могли лечить самого повреждённого из своих однополчан!) Удалить
+// ненужные методы из абстрактного класса, если такие есть.
+//                   ************** SEMINAR3 ***************
+//Проделать код ревью своих работ! Оптимизиривать интерфейс так, чтобы в клиент коде было видно только
+// публичные поля. Добавить поведение (метод step) для лучников.
+//1.Если стрел больше нуля заглушка выстрел и уменьшение количества стрел
+//2.Проверить есть ли крестьяне и свободны ли хоть один из них. Если да, то вернуть одну стрелу и сбросить
+// флаг свободен у крестьянина.
+//3.Крестьяне должны уметь поднимать свой статус "свободен"
+//4.Сделать так, чтобы по нажатию Enter программа повторяла вывод на экран состояние персонажей и вызов метода step.
+
+
 public class Main {
+
     public static void main(String[] args) {
-        String[] gameName = {"Витя", "Коля", "Саша", "Вася", "Даша", "Михаил", "Иван", "Сергей",
-                "Серый", "Федя", "Миха", "Лютый", "Бывалый", "Тихий", "Шустрый", "Тёма", "Игорь",
-                "Гога", "Давид", "Данил", "Ибрагим", "Капа", "Лера", "Левон", "Ворон"};
-        ArrayList<BaseHero> farmer = new ArrayList<>();
-        ArrayList<BaseHero> rogue = new ArrayList<>();
-        ArrayList<BaseHero> sniper = new ArrayList<>();
-        ArrayList<BaseHero> mage = new ArrayList<>();
-        ArrayList<BaseHero> spearman = new ArrayList<>();
-        ArrayList<BaseHero> crossbowman = new ArrayList<>();
-        ArrayList<BaseHero> monk = new ArrayList<>();
-        // Форимирование 50-ти случайных персонажей.
-        // 1-крестьянин
-        // 2-разбойник
-        // 3-снайпер
-        // 4-колдун
-        // 5-копейщик
-        // 6-арбалетчик
-        // 7-монах
-        int character;
-        for (int i = 0; i < 50; i++) {
-            character = ThreadLocalRandom.current().nextInt(1, 8);
-            switch (character) {
-                case 1 ->
-                    farmer.add(new Farmer(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
+        Random rand = new Random();
+        ArrayList<BaseHero> gameListOne = new ArrayList<>();
+        ArrayList<BaseHero> gameListTwo = new ArrayList<>();
+        gameList(gameListOne, 1, rand);
+        gameList(gameListTwo, 2, rand);
+        Scanner str = new Scanner(System.in);
 
-                case 2 ->
-                    rogue.add(new Rogue(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
 
-                case 3 ->
-                    sniper.add(new Sniper(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
+//        for (BaseHero tr: gameListOne){System.out.println(tr);}
 
-                case 4 ->
-                    mage.add(new Mage(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
-
-                case 5 ->
-                    spearman.add(new Spearman(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
-
-                case 6 ->
-                    crossbowman.add(new Crossbowman(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
-
-                case 7 ->
-                    monk.add(new Monk(gameName[ThreadLocalRandom.current().nextInt(1, 25)]));
-
-            }
-        }
-        // вывод на эран сформированных персонажей
-        Scanner iScaner = new Scanner(System.in);
+        gameListOne.forEach(item -> System.out.println(item.getInfo() + " ,"));
+        System.out.println("---*---");
         boolean triger = true;
-        while (triger){
-            System.out.println("\n     -----------------------------\n" +
-                "Выберите персонажа для вывода на экран. Выход -0" +
-                "         1-крестьянин\n" +
-                "         2-разбойник\n" +
-                "         3-снайпер\n" +
-                "         4-колдун\n" +
-                "         5-копейщик\n" +
-                "         6-арбалетчик\n" +
-                "         7-монах ");
-        character = iScaner.nextInt();
-            switch (character) {
-                case 1 -> {
-                    for (BaseHero tr : farmer) {
-                        System.out.println(tr);
-                    }
-                }
-                case 2 -> {
-                    for (BaseHero tr : rogue) {
-                        System.out.println(tr);
-                    }
-                }
-                case 3 -> {
-                    for (BaseHero tr : sniper) {
-                        System.out.println(tr);
-                    }
-                }
-                case 4 -> {
-                    for (BaseHero tr : mage) {
-                        System.out.println(tr);
-                    }
-                }
-                case 5 -> {
-                    for (BaseHero tr : spearman) {
-                        System.out.println(tr);
-                    }
-                }
-                case 6 -> {
-                    for (BaseHero tr : crossbowman) {
-                        System.out.println(tr);
-                    }
-                }
-                case 7 -> {
-                    for (BaseHero tr : monk) {
-                        System.out.println(tr);
-                    }
-                }
-                default ->
-                    triger = false;
-
-            }
+        while (triger) {
+            System.out.println("!!!enter - сдедующий ход, все остальное - выход!!!");
+            String move = str.nextLine();
+            if (move.equals("")) {
+                restoreFarmer(gameListOne); //Восстановление supple у крестьянина
+                gameListOne.forEach(item -> item.step(gameListOne));
+            } else triger = false;
         }
-        iScaner.close();
     }
 
+//        for(BaseHero param: gameListOne){
+//            param.step(gameListOne);}
+//        Поиск по полю "Фермер"
+//        chooseHero(gameListOne, "Фермер");
+
+     // Создаем два файла с персонажами
+    private static void gameList(ArrayList<BaseHero> ListOne, int mode, Random rand) {
+        for (int i = 0; i < 10; i++) {
+            int character = rand.nextInt(1, 5);
+            if (mode == 1){
+                switch (character) {
+                    case 1 -> ListOne.add(new Farmer(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    case 2 -> ListOne.add(new Rogue(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    case 3 -> ListOne.add(new Sniper(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    case 4 -> ListOne.add(new Mage(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                }
+            }
+            else {
+                switch (character) {
+                    case 1 -> ListOne.add(new Farmer(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    case 2 -> ListOne.add(new Spearman(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    case 3 -> ListOne.add(new Crossbowman(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    case 4 -> ListOne.add(new Monk(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
+                    }
+                }
+            }
+        }
+
+
+    // Поиск по полю heroRole
+        private static void chooseHero(ArrayList<BaseHero> ListOne, String heroRole){
+        System.out.printf("List of %s roles\n", heroRole);
+        for(BaseHero hero: ListOne){
+            if(hero.toString().contains(heroRole)){
+                System.out.println((hero));
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
