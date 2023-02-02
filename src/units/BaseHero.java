@@ -1,9 +1,13 @@
+package units;
+
+import units.BaseInterface;
+
 import java.util.*;
 
-public abstract class BaseHero implements BaseInterface{
-    String name, type;
-    Integer attack, defence, health, speed, maxhealt;
-    int[] damage;
+public abstract class BaseHero implements BaseInterface {
+    protected String name, type;
+    protected Integer attack, defence, health, speed, maxhealt;
+    protected int[] damage;
 
     public BaseHero(String name, String type, int attack, int defence, int[] damage, int health, int speed) {
         this.name = name;
@@ -20,12 +24,12 @@ public abstract class BaseHero implements BaseInterface{
         return "Name: "+name+"Type"+type+" Attack: "+attack+" Defence: "+defence+" Damage: "+ Arrays.toString(damage) +" Health: "+health+" Speed: "+speed;
     }
 
-    @Override
+//    @Override
     public void step(ArrayList<BaseHero> heroylist) {
 
     }
 
-    @Override
+//    @Override
     public String getInfo() {
         return type + " " + name + " Здоровье: " + String.valueOf(health)+" "+String.valueOf(maxhealt);
 //        return type + " " + name + ". Здоровье: " + health+" , "+maxhealt;

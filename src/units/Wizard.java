@@ -1,8 +1,10 @@
+package units;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Wizard extends BaseHero {
-    int mana;
+    protected int mana;
     public Wizard(String name, String type, int attack, int defence, int[] damage, int health, int speed) {
         super(name, type, attack, defence, damage, health, speed);
         this.mana = mana;
