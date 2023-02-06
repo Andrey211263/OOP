@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Archer extends BaseHero {
     protected int shoots;
-    public Archer(String name, String type, int attack, int defence, int[] damage, int health, int speed) {
-        super(name, type, attack, defence, damage, health, speed);
+    public Archer(String name, String type, int attack, int defence, int[] damage, int health, int speed, int x, int y) {
+        super(name, type, attack, defence, damage, health, speed, x, y);
         this.shoots = shoots;
     }
 
@@ -21,7 +21,7 @@ public class Archer extends BaseHero {
         int signShot = 0; // признак сделан выстрел или нет
 
         for(int i = 0; i < heroylist.size(); i++) {
-            if (heroylist.get(i).type.equals(" Фермер ")) {
+            if (heroylist.get(i).type.equals("Фермер ")) {
                 if (((Farmer) heroylist.get(i)).supply > 0) {
                     System.out.println("->"+this.name+" делает выстрел,"+" остаток стрел: "+this.shoots);
                     ((Farmer) heroylist.get(i)).supply = 0;

@@ -1,11 +1,10 @@
 //import java.beans.DefaultPersistenceDelegate;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
 
 import units.*;
 
-import static units.Farmer.restoreFarmer;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 //                   ************** SEMINAR1 ****************
 //Написать программу с семью классами, описывающими данных в таблице персонажей. Для каждого создать
@@ -35,69 +34,56 @@ import static units.Farmer.restoreFarmer;
 // флаг свободен у крестьянина.
 //3.Крестьяне должны уметь поднимать свой статус "свободен"
 //4.Сделать так, чтобы по нажатию Enter программа повторяла вывод на экран состояние персонажей и вызов метода step.
+//                   ************** SEMINAR4 *****************
+//Оптимизировать проект для вывода информации в псевдо графике.
 
 
 public class Main {
+    public static final int GANG_SIZE = 10;
+    public static ArrayList<BaseHero> whiteSide;
+    public static ArrayList<BaseHero> darkSide;
 
     public static void main(String[] args) {
-        Random rand = new Random();
-        ArrayList<BaseHero> gameListOne = new ArrayList<>();
-        ArrayList<BaseHero> gameListTwo = new ArrayList<>();
-        gameList(gameListOne, 1, rand);
-        gameList(gameListTwo, 2, rand);
-        Scanner str = new Scanner(System.in);
 
 
-//        for (BaseHero tr: gameListOne){System.out.println(tr);}
 
-        gameListOne.forEach(item -> System.out.println(item.getInfo() + " ,"));
-        System.out.println("---*---");
-        boolean triger = true;
-        while (triger) {
-            System.out.println("!!!enter - сдедующий ход, все остальное - выход!!!");
-            String move = str.nextLine();
-            if (move.equals("")) {
-                restoreFarmer(gameListOne); //Восстановление supple у крестьянина
-                gameListOne.forEach(item -> item.step(gameListOne));
-            } else triger = false;
+    init();
+        Scanner scanner = new Scanner(System.in);
+        while (true){
+            ConsoleView.view();
+            whiteSide.forEach(n -> n.step(darkSide));
+            darkSide.forEach(n -> n.step(whiteSide));
+            scanner.nextLine();
+
         }
     }
 
-//        for(BaseHero param: gameListOne){
-//            param.step(gameListOne);}
-//        Поиск по полю "Фермер"
-//        chooseHero(gameListOne, "Фермер");
 
      // Создаем два файла с персонажами
-    private static void gameList(ArrayList<BaseHero> ListOne, int mode, Random rand) {
-        for (int i = 0; i < 10; i++) {
-            int character = rand.nextInt(1, 5);
-            if (mode == 1){
-                switch (character) {
-                    case 1 -> ListOne.add(new Farmer(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    case 2 -> ListOne.add(new Rogue(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    case 3 -> ListOne.add(new Sniper(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    case 4 -> ListOne.add(new Mage(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                }
-            }
-            else {
-                switch (character) {
-                    case 1 -> ListOne.add(new Farmer(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    case 2 -> ListOne.add(new Spearman(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    case 3 -> ListOne.add(new Crossbowman(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    case 4 -> ListOne.add(new Monk(NameCharacter.values()[rand.nextInt(NameCharacter.values().length)]));
-                    }
-                }
+    private static void init() {
+        whiteSide = new ArrayList<>();
+        darkSide = new ArrayList<>();
+        int x = 1;
+        int y = 1;
+        for (int i = 0; i < GANG_SIZE; i++) {
+            int length = NameCharacter.values().length;
+
+            switch (new Random().nextInt(4)) {
+
+                case 0 -> whiteSide.add(new Farmer(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
+                case 1 -> whiteSide.add(new Rogue(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
+                case 2 -> whiteSide.add(new Sniper(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
+                default -> whiteSide.add(new Mage(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
             }
         }
-
-
-    // Поиск по полю heroRole
-        private static void chooseHero(ArrayList<BaseHero> ListOne, String heroRole){
-        System.out.printf("List of %s roles\n", heroRole);
-        for(BaseHero hero: ListOne){
-            if(hero.toString().contains(heroRole)){
-                System.out.println((hero));
+        x = GANG_SIZE;
+        y = 1;
+        for (int i = 0; i < GANG_SIZE; i++){
+            switch (new Random().nextInt(4)) {
+                case 0 -> darkSide.add(new Farmer(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], darkSide, x, y++));
+                case 1 -> darkSide.add(new Spearman(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
+                case 2 -> darkSide.add(new Crossbowman(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
+                default -> darkSide.add(new Monk(NameCharacter.values()[new Random().nextInt(NameCharacter.values().length)], whiteSide,  x, y++));
             }
         }
     }

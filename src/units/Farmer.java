@@ -6,20 +6,22 @@ import java.util.ArrayList;
 public class Farmer extends BaseHero {
     public int supply;
 
-    public Farmer(String name, String type, int attack, int defence, int[] damage, int health, int speed, int supply) {
-        super(name, type, attack, defence, damage, health, speed);
+    public Farmer(String name, String type, int attack, int defence, int[] damage, int health, int speed, int supply, int x, int y) {
+        super(name, type, attack, defence, damage, health, speed, x, y);
         this.supply = supply;
     }
-    public Farmer(NameCharacter name){
-        super(String.valueOf(name), " Фермер ",1,1, new int[] {1,1},1, 3);
+    public Farmer(NameCharacter name, ArrayList<BaseHero> gang, int x, int y){
+        super(String.valueOf(name), "Фермер ",1,1, new int[] {1,1},1, 3, x, y);
         this.supply = 1;
     }
+
+
 
     //Восстановление supple у крестьянина
     public static void restoreFarmer(ArrayList<BaseHero> list) {
 
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).type.equals(" Фермер "))
+            if (list.get(i).type.equals("Фермер "))
                 if (((Farmer) list.get(i)).supply == 0) {
                     ((Farmer) list.get(i)).supply = 1;
                 }
