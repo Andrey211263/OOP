@@ -2,11 +2,11 @@ package units;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public abstract class BaseHero implements BaseInterface {
     protected String name, type;
-    protected Integer attack, defence, health, speed, maxhealt, x, y;
+    protected Integer attack, defence, speed, maxhealt, x, y;
+    protected float health;
     protected int[] damage;
     protected Vector2 position;
 
@@ -18,7 +18,8 @@ public abstract class BaseHero implements BaseInterface {
         this.defence = defence;
         this.damage = damage;
         this.maxhealt = health;
-        this.health = maxhealt - new Random().nextInt(maxhealt);
+//        this.health = maxhealt - new Random().nextInt(maxhealt);
+        this.health = maxhealt;
         this.speed = speed;
         this.x = x;
         this.y = y;
@@ -38,12 +39,25 @@ public abstract class BaseHero implements BaseInterface {
         return position;
     }
 
+    public float healthColor(int i) {
+        return health;
+    }
+
     public String getName(){
         return type;
     }
     public String getInfo() {
         return type + " " + name + " Здоровье: "+"\uD83E\uDDE1"+ String.valueOf(health)+" "+String.valueOf(maxhealt)+ " ⚔️"+ attack;
-//        return type + " " + name + ". Здоровье: " + health+" , "+maxhealt;
+    }
+    public void getDamage(float attackPower){
+        this.health -= attackPower;
+        if (this.health < 0){
+            this.health = 0;
+        }
+        else if (this.health > maxhealt){
+            this.health = maxhealt;
+        }
+
     }
 //    @Override
 //    public String getInfo() {

@@ -21,6 +21,7 @@ public class Wizard extends BaseHero {
         float min = 100;
         int minHeat = 0;
         int mini = 0;
+        boolean signHeat = false; //признак требуется лечение ( 0 < heat < 100% )
 
         for (int i =0; i < heroylist.size(); i++){
 
@@ -29,13 +30,16 @@ public class Wizard extends BaseHero {
                 min = tmp;
                 minHeat = heroylist.get(i).maxhealt;
                 mini = i;
+                signHeat = true;
             }
         }
+        if (signHeat) {
 
-        heroylist.get(mini).health=minHeat; // восстанавливаем здоровье текущего персонажа
-        System.out.println("*лечение*"+heroylist.get(mini).type+": "+ heroylist.get(mini).name+", до  = "+min+"%, "+
-                ", после = "+heroylist.get(mini).health+" (100%)");
-//                minHeat = Integer.parseInt(her[6]);
+            heroylist.get(mini).health += 3; // minHeat восстанавливаем здоровье текущего персонажа
+            heroylist.get(mini).getDamage(0); // для приведения к 0 или к максимуму
+            System.out.println("*лечение выполнил* "+this.type+" "+this.name+" вылечил "+heroylist.get(mini).type + ": "
+                    + heroylist.get(mini).name + ", до  = " + min + "%, " + ", после = " + heroylist.get(mini).health);
+        }
 
     }
 

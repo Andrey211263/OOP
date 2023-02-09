@@ -36,6 +36,10 @@ import java.util.Scanner;
 //4.Сделать так, чтобы по нажатию Enter программа повторяла вывод на экран состояние персонажей и вызов метода step.
 //                   ************** SEMINAR4 *****************
 //Оптимизировать проект для вывода информации в псевдо графике.
+//                   ************** SEMINAR5 *****************
+// Реализовать пелноценный выстрел у стрелков. Поиск ближайшего противник, расчёт повреждения с учётом расстояния и
+// разницы атаки стрелка и защиты цели. Ну и нанесение повреждения. Боец с нулём жизней считается мёртвым. В
+// дальнейшем не лечится и не наносит повреждений) Мертвые бойцы обозначаются другим цветом..
 
 
 public class Main {
@@ -51,7 +55,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true){
             ConsoleView.view();
+            System.out.println("Ход whiteSide");
             whiteSide.forEach(n -> n.step(darkSide));
+            System.out.println("Ход darkSide");
             darkSide.forEach(n -> n.step(whiteSide));
             scanner.nextLine();
 

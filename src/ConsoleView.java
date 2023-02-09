@@ -61,13 +61,24 @@ public class ConsoleView {
         String str = "| ";
         for (int i = 0; i < Main.GANG_SIZE; i++) {
             if (Main.darkSide.get(i).getPosition().isEquals(position)) {
+                if (Main.darkSide.get(i).healthColor(i) == 0){
+                    str = "|" + AnsiColors.ANSI_RED + Main.darkSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET + "|"
+                            + " ".repeat(3) + AnsiColors.ANSI_GREEN + Main.whiteSide.get(i).getInfo() + AnsiColors.ANSI_RESET
+                            + " ".repeat(5) + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getInfo() + AnsiColors.ANSI_RESET;
+                }
+                else{
+
                 str = "|" + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET + "|"
                         + " ".repeat(3) + AnsiColors.ANSI_GREEN + Main.whiteSide.get(i).getInfo() + AnsiColors.ANSI_RESET
-                        + " ".repeat(5) + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getInfo() + AnsiColors.ANSI_RESET;
+                        + " ".repeat(5) + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getInfo() + AnsiColors.ANSI_RESET;}
             }
 
             if (Main.whiteSide.get(i).getPosition().isEquals(position)){
-                str = "|" + AnsiColors.ANSI_GREEN + Main.whiteSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
+                if (Main.whiteSide.get(i).healthColor(i) == 0){
+                    str = "|" + AnsiColors.ANSI_RED + Main.whiteSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
+                }
+                else{
+                str = "|" + AnsiColors.ANSI_GREEN + Main.whiteSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;}
             }
         }
         return str;
