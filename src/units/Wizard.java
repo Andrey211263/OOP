@@ -38,7 +38,8 @@ public class Wizard extends BaseHero {
             heroylist.get(mini).health += 3; // minHeat восстанавливаем здоровье текущего персонажа
             heroylist.get(mini).getDamage(0); // для приведения к 0 или к максимуму
             System.out.println("*лечение выполнил* "+this.type+" "+this.name+" вылечил "+heroylist.get(mini).type + ": "
-                    + heroylist.get(mini).name + ", до  = " + min + "%, " + ", после = " + heroylist.get(mini).health);
+                    + heroylist.get(mini).name + ", до  = " + min + "%, " + ", после = "
+                    + heroylist.get(mini).health*100/heroylist.get(mini).maxhealt+"%");
         }
 
     }
